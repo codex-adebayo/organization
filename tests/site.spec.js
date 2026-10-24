@@ -55,7 +55,7 @@ test('content remains available without JavaScript', async ({ browser }) => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:8000/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.locator('#work h2')).toBeVisible();
+  await expect(page.locator('#work > h2')).toBeVisible();
   await expect(page.locator('#contact h2')).toBeVisible();
   await context.close();
 });

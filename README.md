@@ -43,3 +43,11 @@ Before public launch, confirm the agency name, actual capabilities, approved por
 Google Fonts is an optional external stylesheet with system fallbacks. Review accessibility and production performance on real devices before launch; automated checks do not establish complete compliance or field performance.
 
 See [the design direction](docs/design-direction.md).
+
+## Storytelling and design agents
+
+The root [AGENTS.md](AGENTS.md) connects future repository agents to the vendored [Design Motion Principles](.agents/skills/design-motion-principles/SKILL.md) and [Kino](.agents/skills/kino/SKILL.md) skills. Both retain their MIT licences and source provenance.
+
+The agency story uses react-kino. Project exits use AnimatePresence from motion/react. See [the motion system](docs/motion-system.md) for boundaries, accessibility decisions, and update guidance.
+
+Run `npm run check:story` to validate/export the portable story and inspect it with Kino doctor. The exported document is uploaded in the cloud review artifact alongside browser screenshots.

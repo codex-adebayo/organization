@@ -1,8 +1,9 @@
 node_modules/
-playwright-report/
-test-results/
-.DS_Store
 .next/
 out/
+playwright-report/
+test-results/
+.story-check/
 .env*
 !.env.example
+.DS_Store

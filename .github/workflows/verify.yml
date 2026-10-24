@@ -18,6 +18,7 @@ jobs:
           node-version: '22'
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run check
+      - run: npm run check:story
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm test
@@ -25,7 +26,9 @@ jobs:
         if: always()
         with:
           name: browser-review
+          include-hidden-files: true
           path: |
             playwright-report/
             test-results/
+            .story-check/
           retention-days: 14

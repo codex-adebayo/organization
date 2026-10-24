@@ -1,0 +1,25 @@
+{
+  "reviewed": "2026-10-24",
+  "sources": [
+    {
+      "repository": "https://github.com/btahir/react-kino",
+      "tree": "e62bbd7e1dc16e7fbf803bdb1d76dce73a079d9c",
+      "runtime": "react-kino@0.6.0",
+      "cli": "@react-kino/cli@0.2.0",
+      "licence": "MIT",
+      "skill": ".agents/skills/kino/SKILL.md"
+    },
+    {
+      "repository": "https://github.com/kylezantos/design-motion-principles",
+      "tree": "4a9ca879f24a361f4dca4174fe2da0f67b5ddee3",
+      "licence": "MIT",
+      "skill": ".agents/skills/design-motion-principles/SKILL.md"
+    },
+    {
+      "repository": "https://github.com/motiondivision/motion",
+      "runtime": "motion@14.6.0",
+      "documentation": "https://motion.dev/docs/react-animate-presence",
+      "licence": "MIT"
+    }
+  ]
+}

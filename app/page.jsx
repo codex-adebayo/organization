@@ -3,6 +3,7 @@ import HeroStage from '../components/HeroStage';
 import Projects from '../components/Projects';
 import BriefForm from '../components/BriefForm';
 import Motion from '../components/Motion';
+import AgencyStory from '../components/AgencyStory';
 
 export default function HomePage() {
   return <>
@@ -14,6 +15,7 @@ export default function HomePage() {
 <h1 id="hero-title">Good ideas.<br /><span className="hero-bottom"><em>Unforgettable</em><span className="asterisk" aria-hidden="true">✳</span></span>experiences.</h1>
 <div className="hero-foot"><p>We bring clarity to the complex.<br />And a little unexpected to everything.</p><a className="circle-link" href="#work"><span>Discover our thinking</span><span className="round-arrow">↓</span></a></div>
 <HeroStage /></section>
+      <AgencyStory />
       <section id="work" className="work section-pad">
 <div className="section-top reveal"><div className="eyebrow">01 / SELECTED EXPLORATIONS</div><p>Different challenges.<br />The same restless curiosity.</p></div>
 <h2 className="section-title reveal">Less expected.<br /><em>More remembered.</em></h2>

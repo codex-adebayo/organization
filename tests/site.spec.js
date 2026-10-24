@@ -74,3 +74,74 @@ test('Next.js metadata, assets and missing routes', async ({ page, request }) =>
   expect((await request.get('/favicon.svg')).status()).toBe(200);
   expect((await request.get('/does-not-exist')).status()).toBe(404);
 });
+
+test('Kino story progresses on desktop and offers a reading choice', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const story = page.locator('[data-kino-story]');
+  await expect(story).toHaveCount(1);
+  await expect(story.locator('[data-kino-scene]')).toHaveCount(2);
+  await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'false');
+  const scene = page.locator('[data-kino-scene="clarity"]');
+  const layer = scene.locator('[data-kino-layer="clarity-visual"]');
+  await scene.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
+  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.9);
+  await scene.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY + innerHeight * 0.65, behavior: 'instant' }));
+  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBeGreaterThan(0.98);
+  await page.getByRole('button', { name: 'Read without motion' }).click();
+  await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'true');
+  await expect(page.getByRole('button', { name: 'Explore with scroll' })).toHaveAttribute('aria-pressed', 'true');
+  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
+  await page.getByRole('button', { name: 'Explore with scroll' }).click();
+  await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'false');
+});
+
+test('story stays readable on narrow screens and with reduced motion', async ({ page }) => {
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    const panels = page.locator('[data-kino-content]');
+    await expect(panels).toHaveCount(2);
+    await expect.poll(() => panels.first().evaluate(element => getComputedStyle(element.parentElement).position)).not.toBe('sticky');
+    for (const layer of await page.locator('[data-kino-layer]').all()) {
+      await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect.poll(() => page.locator('[data-kino-content]').first().evaluate(element => getComputedStyle(element.parentElement).position)).not.toBe('sticky');
+  await expect(page.locator('body')).not.toHaveClass(/motion-ready/);
+  await expect(page.getByRole('heading', { name: 'Then, make it unmistakable.' })).toBeVisible();
+});
+
+test('animated dialog restores focus across repeated open and close actions', async ({ page }) => {
+  await page.goto('/');
+  const trigger = page.locator('[data-project="terrain"]');
+  for (let cycle = 0; cycle < 3; cycle++) {
+    await trigger.click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.getByRole('button', { name: 'Close project' }).click();
+    await expect(page.getByRole('dialog')).not.toBeVisible();
+    await expect(trigger).toBeFocused();
+  }
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+});
+
+test('story is complete without JavaScript or external fonts', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  await context.route('**/*fonts*', route => route.abort());
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:8000/');
+  await expect(page.getByRole('heading', { name: 'First, find the idea.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Then, make it unmistakable.' })).toBeVisible();
+  expect(await page.locator('[data-kino-layer]').count()).toBe(4);
+  await context.close();
+});

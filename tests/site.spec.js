@@ -55,7 +55,7 @@ test('content remains available without JavaScript', async ({ browser }) => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:8000/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.locator('#work h2')).toBeVisible();
+  await expect(page.locator('#work > h2')).toBeVisible();
   await expect(page.locator('#contact h2')).toBeVisible();
   await context.close();
 });
@@ -65,4 +65,12 @@ test('capture review screenshots', async ({ page }, testInfo) => {
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: testInfo.outputPath('homepage.png'), fullPage: true });
   await testInfo.attach('Homepage', { path: testInfo.outputPath('homepage.png'), contentType: 'image/png' });
+});
+
+test('Next.js metadata, assets and missing routes', async ({ page, request }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle('FORME — Independent digital studio');
+  expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('digital studio');
+  expect((await request.get('/favicon.svg')).status()).toBe(200);
+  expect((await request.get('/does-not-exist')).status()).toBe(404);
 });

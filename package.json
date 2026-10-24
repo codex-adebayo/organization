@@ -3,9 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "check": "node --check app.js && node --check tests/site.spec.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "node --check next.config.mjs && node --check tests/site.spec.js",
     "test": "playwright test"
+  },
+  "dependencies": {
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1"

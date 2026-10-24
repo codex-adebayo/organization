@@ -29,3 +29,5 @@
 .story-toolbar > div,.story-narrative{min-width:0}
 .story-narrative h2{overflow-wrap:anywhere}
 @media(max-width:700px){.agency-kino [data-kino-content] > div > div{grid-template-columns:minmax(0,1fr)!important}}
+
+.story-art{width:100%;max-width:100%;min-width:0}

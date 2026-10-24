@@ -41,7 +41,14 @@ test('reduced motion, mobile widths and keyboard dialog access', async ({ page }
   await expect(page.locator('body')).not.toHaveClass(/motion-ready/);
   for (const width of [320, 375, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect.poll(() => page.evaluate(() => {
+      if (document.documentElement.scrollWidth <= innerWidth) return null;
+      return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
+        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+          const bounds = element.getBoundingClientRect();
+          return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
+        }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
+    })).toBeNull();
   }
   await page.locator('[data-project="terrain"]').focus();
   await page.keyboard.press('Enter');
@@ -107,7 +114,14 @@ test('story stays readable on narrow screens and with reduced motion', async ({ 
     for (const layer of await page.locator('[data-kino-layer]').all()) {
       await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
     }
-    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect.poll(() => page.evaluate(() => {
+      if (document.documentElement.scrollWidth <= innerWidth) return null;
+      return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
+        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+          const bounds = element.getBoundingClientRect();
+          return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
+        }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
+    })).toBeNull();
   }
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });

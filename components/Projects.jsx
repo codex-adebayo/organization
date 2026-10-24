@@ -45,12 +45,13 @@ export default function Projects() {
 <button className="project project-offset reveal" data-project="folio" onClick={event => openProject('folio', event.currentTarget, event.detail === 0)} aria-haspopup="dialog"><span className="art folio"><span className="art-top">folio/ <span>A PLACE FOR WHAT’S NEXT.</span></span><span className="folio-window"><span>YOUR NEXT CHAPTER</span><strong>Room<br />to grow.</strong><span className="folio-grid"><i></i><i></i><i></i></span><span>Spaces for independent thinking. ↗</span></span><span className="project-open">Explore concept ↗</span></span><span className="project-meta"><span>Folio <small>Creative spaces / Concept study</small></span><span>Positioning · Web · Development ↗</span></span></button>
 </div>
     <dialog ref={dialog} id="project-dialog" aria-labelledby="dialog-title" onClick={backdropClick} onCancel={event => { event.preventDefault(); closeProject(true); }} onClose={() => { setPresent(false); trigger.current?.focus(); }}>
-      <AnimatePresence initial={false} onExitComplete={finishClose}>
+      <AnimatePresence initial={false} custom={reduced || instant} onExitComplete={finishClose}>
       {present && <motion.div key={active} data-project-panel={active}
         initial={reduced || instant ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: reduced || instant ? 0 : 3 }}
-        transition={{ duration: reduced || instant ? 0 : present ? 0.24 : 0.14, ease: [0.22, 1, 0.36, 1] }}>
+        variants={{ departure: immediate => ({ opacity: 0, y: immediate ? 0 : 3, transition: { duration: immediate ? 0 : 0.14, ease: [0.22, 1, 0.36, 1] } }) }}
+        exit="departure"
+        transition={{ duration: reduced || instant ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}>
       <button className="dialog-close" aria-label="Close project" onClick={event => closeProject(event.detail === 0)}>Close ✕</button>
       <span className="eyebrow">SELF-INITIATED CONCEPT / NOT CLIENT WORK</span>
       <h2 id="dialog-title">{concept.title}</h2><p id="dialog-intro">{concept.intro}</p>

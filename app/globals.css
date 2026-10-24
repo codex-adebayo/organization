@@ -24,3 +24,8 @@
 .project:hover .project-open{transition-timing-function:cubic-bezier(.22,1,.36,1)}
 @media(max-width:700px){.story-toolbar{align-items:flex-start;flex-direction:column;padding-top:45px;gap:20px}.story-toolbar h2{font-size:16px}.story-art{min-height:280px;max-height:none;aspect-ratio:1.15}.story-narrative h2{font-size:clamp(35px,8vw,55px)}.story-narrative p{font-size:14px}.central-idea{font-size:clamp(38px,10vw,60px)}.identity-sheet strong{font-size:clamp(35px,9vw,55px)}.thought{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.project:hover .ondo-disc,.hero-bottom:hover .asterisk{transform:none}.project:hover .project-open{transform:none}}
+
+/* Keep the reading grid correct immediately during viewport changes, before JS measurement. */
+.story-toolbar > div,.story-narrative{min-width:0}
+.story-narrative h2{overflow-wrap:anywhere}
+@media(max-width:700px){.agency-kino [data-kino-content] > div > div{grid-template-columns:minmax(0,1fr)!important}}

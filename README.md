@@ -1,38 +1,45 @@
-# FORME — agency experience
+# FORME — Next.js agency app
 
-A fresh digital agency website built directly in GitHub. FORME is an editable working identity, not a confirmed company name. None of the previous finance application's code is reused.
+An editorial digital agency website built with the Next.js App Router and React. FORME is an editable working identity. Portfolio studies are clearly labelled self-initiated concepts.
 
-## Experience
+## Architecture
 
-- Responsive editorial typography, a custom CSS hero composition, and reduced-motion support.
-- Three clearly labelled self-initiated portfolio concepts with accessible native case-study dialogs.
-- Expandable service descriptions, studio positioning, and a four-stage process.
-- Project brief builder with validation and a browser-generated text download. It does **not** send email, submit an enquiry, or persist personal information.
-- Semantic sections, skip navigation, keyboard focus, mobile navigation, and progressive enhancement.
+- `app/layout.jsx`: document shell, metadata, theme colour, and global styles.
+- `app/page.jsx`: server-rendered homepage content and section structure.
+- `components/Header.jsx`: responsive navigation.
+- `components/HeroStage.jsx`: interactive hero composition.
+- `components/Projects.jsx`: portfolio concepts and accessible native dialogs.
+- `components/BriefForm.jsx`: validated, browser-only project brief download.
+- `components/Motion.jsx`: scroll reveals with cleanup and reduced-motion support.
+- `public/favicon.svg`: original icon.
 
-## Source
+The main content renders on the server. Small client components handle state and browser APIs; the old standalone HTML and imperative JavaScript entry points are removed.
 
-`index.html` provides the complete content. `styles.css` supplies the responsive design and motion. `app.js` handles navigation, reveals, project dialogs, and brief creation. Google Fonts is an optional external stylesheet; system fonts remain usable if it is unavailable. No framework or production dependencies are required.
+## Commands
+
+Node.js 22 or newer is recommended.
+
+```sh
+npm install
+npm run dev
+npm run build
+npm start
+```
+
+The production build is served by Next.js. Deploy through a Next.js-compatible host or Node.js runtime; this is no longer a buildless static root.
 
 ## Cloud verification
 
-GitHub Actions installs the pinned Playwright test dependency, checks JavaScript syntax, and runs Chromium checks at desktop and mobile sizes. Tests cover projects, keyboard dismissal/focus restoration, reduced motion, narrow-screen overflow, brief downloads, content without JavaScript, and review screenshots.
+All source changes are made directly through GitHub. GitHub Actions installs dependencies, checks JavaScript syntax, runs a production Next.js build, then executes Playwright against `next start`.
 
-Open the **Website verification** run and download **browser-review** for the HTML test report and screenshots. Runtime delivery is static; there is no bundling step.
+Tests cover desktop/mobile journeys, project dialogs, keyboard focus, reduced motion, 320–1440 px overflow, brief downloads, content without JavaScript, metadata, asset delivery, and 404 routes. The browser-review artifact contains screenshots and the HTML report.
 
-## Preview and hosting
+## Content and enquiry status
 
-The repository remains private. This PR does not publish the site or change repository visibility. Deploy the repository root to any approved static host; serve `index.html`, `styles.css`, `app.js`, and `favicon.svg`. GitHub Pages availability depends on the account plan and repository settings.
+The preview creates a downloadable brief in the visitor's browser. No email is sent, no personal information is persisted, and no server form destination is configured. The UI states this explicitly.
 
-For an optional developer preview, serve the root with a static HTTP server. No local checkout was used to author this implementation.
+Before public launch, confirm the agency name, actual capabilities, approved portfolio, contact destination, commercial budget bands, legal details, and hosting/domain. Connect and test enquiry delivery before replacing the download-only wording.
 
-## Before public launch
+Google Fonts is an optional external stylesheet with system fallbacks. Review accessibility and production performance on real devices before launch; automated checks do not establish complete compliance or field performance.
 
-1. Confirm the agency name, identity, audience, actual capabilities, and legal owner.
-2. Replace concept projects with approved case studies, or keep their concept labels.
-3. Add real contact information and connect a secure enquiry endpoint with explicit success/error handling. Replace the download-only wording only when delivery is tested.
-4. Confirm budget bands and any privacy/legal obligations for the chosen form destination.
-5. Review browser screenshots, accessibility, and production performance. Automated smoke tests do not establish full accessibility compliance or field performance.
-6. Set the final domain, canonical metadata, and social preview assets.
-
-See [the creative brief](docs/design-direction.md) for the intended visitor journey.
+See [the design direction](docs/design-direction.md).

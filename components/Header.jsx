@@ -10,10 +10,10 @@ export default function Header() {
   }, []);
   return <header className="nav">
     <a className="wordmark" href="#" aria-label="FORME home">forme<span>®</span></a>
-    <span className="nav-note">Independent minds.<br />Extraordinary possibilities.</span>
+    <span className="nav-note">Connected data.<br />Less manual work.</span>
     <Feedback className="menu-toggle" aria-expanded={open} aria-controls="navigation" onClick={() => setOpen(!open)}>Menu <span>+</span></Feedback>
     <nav id="navigation" className={open ? 'open' : ''} aria-label="Main navigation" onClick={() => setOpen(false)}>
-      <a href="#work">Work <sup>03</sup></a><a href="#approach">Approach</a><a href="#studio">Studio</a>
+      <a href="#work">Use cases <sup>03</sup></a><a href="#approach">Approach</a><a href="#expertise">Services</a>
       <a className="nav-contact" href="#contact">Let’s talk <span>↗</span></a>
     </nav>
   </header>;

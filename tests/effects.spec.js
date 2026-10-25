@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const groups = [
-  'hero-copy', 'hero-media', 'story-heading', 'story-clarity-copy', 'story-clarity-media',
+  'hero-copy', 'flow-heading', 'flow-step-0', 'flow-step-1', 'flow-step-2', 'story-heading', 'story-clarity-copy', 'story-clarity-media',
   'story-expression-copy', 'story-expression-media', 'work-copy', 'work-projects', 'studio-content',
   'expertise-copy', 'expertise-services', 'process-intro', 'process-heading',
   'process-step-0', 'process-step-1', 'process-step-2', 'process-step-3', 'contact-content', 'footer-promo'
@@ -37,7 +37,7 @@ test('hero starts on mount; lower groups use independent scroll triggers and nev
   await page.goto('/');
   await expect(page.locator('[data-effect-group="hero-copy"]')).toHaveAttribute('data-effect-runs', '1');
   const hero = await page.evaluate(() => window.effectPlays.filter(play => play.group?.startsWith('hero-')));
-  expect(hero).toHaveLength(2);
+  expect(hero).toHaveLength(1);
   hero.forEach(play => {
     expect(play.timing.duration).toBe(800);
     expect(play.timing.delay).toBe(0);
@@ -67,6 +67,9 @@ test('hero starts on mount; lower groups use independent scroll triggers and nev
 test('actual keyframes obey phone travel, media scale and timeline interpolation', async ({ page }) => {
   await recordPlayback(page);
   await page.goto('/');
+  const mediaTarget = page.locator('[data-effect-group="story-clarity-media"]');
+  await mediaTarget.scrollIntoViewIfNeeded();
+  await expect(mediaTarget).toHaveAttribute('data-effect-runs', '1');
   const target = page.locator('[data-effect-group="work-copy"]');
   await target.scrollIntoViewIfNeeded();
   await expect(target).toHaveAttribute('data-effect-runs', '1');
@@ -85,7 +88,7 @@ test('actual keyframes obey phone travel, media scale and timeline interpolation
   // At half time the specified ease is beyond 90% progress; playback must interpolate, not jump.
   expect(metrics.opacity).toBeGreaterThan(0.9);
   expect(metrics.opacity).toBeLessThan(1);
-  const media = await page.evaluate(() => window.effectPlays.find(play => play.group === 'hero-media'));
+  const media = await page.evaluate(() => window.effectPlays.find(play => play.group === 'story-clarity-media'));
   expect(media.keyframes[0]).toEqual({ opacity: 0, transform: 'scale(0.98)' });
   expect(media.keyframes[1]).toEqual({ opacity: 1, transform: 'none' });
 });
@@ -117,9 +120,9 @@ test('feedback has no delay, is interruptible, and reduced motion cancels playba
   await recordPlayback(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
-  const button = page.locator('#shift');
+  const button = page.locator('#hero-motion-toggle');
   await button.scrollIntoViewIfNeeded();
-  await expect(page.locator('[data-effect-group="hero-media"]')).toHaveAttribute('data-effect-state', 'complete');
+  await expect(page.locator('[data-effect-group="hero-copy"]')).toHaveAttribute('data-effect-state', 'complete');
   if (info.project.name === 'desktop') {
     await button.hover();
     await expect(button).toHaveAttribute('data-feedback-state', 'hover');

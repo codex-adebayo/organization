@@ -1,40 +1,82 @@
 import Header from '../components/Header';
 import HeroStage from '../components/HeroStage';
+import HeroScrollSection from '../components/HeroScrollSection';
 import Projects from '../components/Projects';
 import BriefForm from '../components/BriefForm';
 import Reveal from '../components/effects/Reveal';
 import Feedback from '../components/effects/Feedback';
 import AgencyStory from '../components/AgencyStory';
 
+const services = [
+  { title: 'Data integration', copy: 'Connect approved sources and make their data usable together. Define the fields, checks, and sync behaviour before information moves between systems.', items: ['API and tool connections', 'Data mapping and validation', 'Scheduled or event-based sync'] },
+  { title: 'Workflow automation', copy: 'Replace repeatable handoffs with a clear sequence of triggers, rules, and actions. Keep ownership, approval points, and exceptions visible.', items: ['Process and trigger design', 'Routing and approval flows', 'Exception handling'] },
+  { title: 'Reporting & insight', copy: 'Bring operational information into a view your team can act on. Agree consistent metrics, validate refreshes, and surface the changes that need attention.', items: ['Automated reporting', 'Dashboards and useful alerts', 'Data quality checks'] },
+  { title: 'AI-assisted workflows', copy: 'Use AI for a defined task, such as extracting fields or classifying requests. Add review steps and fallbacks before a result drives the next action.', items: ['Document extraction', 'Request classification', 'Human review and safeguards'] }
+];
+const steps = [
+  { label: 'DISCOVER', title: 'Map the real workflow.', copy: 'Identify the repeated work, source systems, owners, and bottlenecks. Agree what a useful outcome would look like before choosing the tools.', output: 'A workflow map and agreed success criteria.' },
+  { label: 'DESIGN', title: 'Plan the connections.', copy: 'Define the data model, access boundaries, business rules, and review points. Decide how the flow should behave when an input is missing or a step fails.', output: 'An integration plan with clear controls.' },
+  { label: 'BUILD', title: 'Build and validate.', copy: 'Implement a bounded flow, test it with approved sample data, and review both the normal path and the exceptions with the people who use it.', output: 'A working automation with tested conditions.' },
+  { label: 'DELIVER', title: 'Launch with visibility.', copy: 'Set up the agreed monitoring and ownership, document how the flow runs, and make the handover practical for your team.', output: 'A runbook, handover, and operational visibility.' }
+];
+
 export default function HomePage() {
   return <>
-    <a className="skip" href="#main">Skip to content</a>
-    <Header />
+    <a className="skip" href="#main">Skip to content</a><Header />
     <main id="main">
-      <section className="hero" aria-labelledby="hero-title">
-<Reveal phase="hero" group="hero-copy">
-<div className="eyebrow"><span className="status-dot"></span> A new perspective on digital <span className="edition">STUDIO CONCEPT / VOL. 01</span></div>
-<h1 id="hero-title">Good ideas.<br /><span className="hero-bottom"><em>Unforgettable</em><span className="asterisk" aria-hidden="true">✳</span></span>experiences.</h1>
-<div className="hero-foot"><p>We bring clarity to the complex.<br />And a little unexpected to everything.</p><a className="circle-link" href="#work"><span>Discover our thinking</span><span className="round-arrow">↓</span></a></div>
-</Reveal><Reveal phase="hero" kind="media" group="hero-media"><HeroStage /></Reveal></section>
+      <section className="hero-experience" aria-labelledby="hero-title" data-hero-experience>
+        <div className="hero hero-futuristic"><HeroStage />
+          <Reveal phase="hero" group="hero-copy" className="hero-copy-overlay relative z-20">
+            <div className="eyebrow"><span className="status-dot" />DATA AUTOMATION, WITH PURPOSE<span className="edition">DATA / WORKFLOWS / INTELLIGENCE</span></div>
+            <h1 id="hero-title">Less busywork.<br /><span className="hero-bottom"><em>More flow.</em><span className="asterisk" aria-hidden="true">✳</span></span></h1>
+            <div className="hero-foot"><p>Connect your tools. Automate repeatable work. Turn scattered information into useful decisions.</p>
+              <a className="circle-link" href="#hero-flow"><span>Explore the data journey</span><span className="round-arrow">↓</span></a></div>
+            <a className="hero-brief-link" href="#contact">Scope an automation ↗</a>
+          </Reveal>
+        </div>
+        <HeroScrollSection />
+      </section>
       <AgencyStory />
       <section id="work" className="work section-pad">
-<Reveal group="work-copy"><div className="section-top"><div className="eyebrow">01 / SELECTED EXPLORATIONS</div><p>Different challenges.<br />The same restless curiosity.</p></div>
-<h2 className="section-title">Less expected.<br /><em>More remembered.</em></h2>
-<p className="concept-note">Self-initiated concepts. A look at our creative direction, not commissioned client work.</p></Reveal>
-<Projects />
-</section>
-      <section className="manifesto section-pad" id="studio"><Reveal group="studio-content"><div className="eyebrow">02 / A POINT OF VIEW</div><p className="manifesto-text">The world has enough<br />of the <em>ordinary.</em><br />We’re here to make<br />something <span className="ink-underline">matter.</span></p><div className="manifesto-bottom"><span className="big-star" aria-hidden="true">✳</span><p>FORME is a working identity for an independent digital agency. The ambition is simple: bring thoughtful strategy, distinctive design, and considered engineering into the same conversation.</p><p>Because a website should do more than look good. It should express who you are, make your value clear, and give people a reason to take the next step.</p></div></Reveal></section>
-      <section className="expertise section-pad" id="expertise"><Reveal group="expertise-copy" className="section-top"><span className="eyebrow">03 / WHAT WE BRING</span><h2>From first question<br />to final <em>detail.</em></h2></Reveal><Reveal group="expertise-services"><div className="services">
-<details open><Feedback as="summary"><span>01</span><h3>Strategy & direction</h3><span className="plus">+</span></Feedback><div className="service-body"><p>Start with the right questions. Define what makes the business different, who needs to hear it, and what the experience should achieve.</p><ul><li>Discovery & positioning</li><li>Creative direction</li><li>Content & experience planning</li></ul></div></details>
-<details><Feedback as="summary"><span>02</span><h3>Identity & expression</h3><span className="plus">+</span></Feedback><div className="service-body"><p>A coherent visual language that gives your business a recognisable point of view, from the smallest detail to the biggest impression.</p><ul><li>Visual identity</li><li>Typography & art direction</li><li>Digital brand systems</li></ul></div></details>
-<details><Feedback as="summary"><span>03</span><h3>Digital experiences</h3><span className="plus">+</span></Feedback><div className="service-body"><p>Websites and interfaces shaped around real people. Clear journeys, expressive composition, and interactions that make sense.</p><ul><li>Web & interface design</li><li>Responsive systems</li><li>Prototypes & motion design</li></ul></div></details>
-<details><Feedback as="summary"><span>04</span><h3>Creative engineering</h3><span className="plus">+</span></Feedback><div className="service-body"><p>Translate the idea into a resilient experience. Build for performance, access, and the people who will maintain it.</p><ul><li>Frontend development</li><li>Interaction engineering</li><li>Accessibility & performance review</li></ul></div></details>
-</div><p className="fine-print">Proposed capabilities for the agency. Final service scope will be confirmed before launch.</p></Reveal></section>
-      <section id="approach" className="process section-pad"><Reveal className="section-top" group="process-intro"><span className="eyebrow">04 / HOW IT COMES TOGETHER</span><p>Room to explore.<br />A clear way forward.</p></Reveal><div className="process-layout"><Reveal as="h2" group="process-heading">Good chemistry.<br /><em>Great process.</em><span className="process-mark" aria-hidden="true">↳</span></Reveal><div className="steps"><Reveal as="article" group="process-step-0" progression count={4} index={0}><span>01 / DISCOVER</span><h3>Understand the ambition.</h3><p>We listen, challenge assumptions, and define what success should look like. You bring the context; we shape the right questions.</p><small>Output: a shared brief and clear priorities.</small></Reveal><Reveal as="article" group="process-step-1" progression count={4} index={1}><span>02 / DEFINE</span><h3>Find the central idea.</h3><p>We connect the positioning, story, and experience into a direction that feels specific to your business.</p><small>Output: creative direction and experience structure.</small></Reveal><Reveal as="article" group="process-step-2" progression count={4} index={2}><span>03 / DESIGN</span><h3>Make it feel inevitable.</h3><p>We explore, prototype, and refine the visual system with you. Typography, content, and motion develop together.</p><small>Output: responsive designs and an interactive prototype.</small></Reveal><Reveal as="article" group="process-step-3" progression count={4} index={3}><span>04 / DELIVER</span><h3>Bring every detail to life.</h3><p>We build, test, and prepare for launch, checking the experience across screens, inputs, and motion preferences.</p><small>Output: a tested website and a practical handover.</small></Reveal></div></div></section>
-      <section className="contact section-pad" id="contact"><Reveal group="contact-content"><div className="eyebrow">05 / SOMETHING STARTS HERE</div><h2>What are you<br /><em>imagining?</em><span aria-hidden="true">↗</span></h2><div className="contact-layout"><div className="contact-copy"><p>A bold first step. A better next chapter.<br />Let’s give your idea some shape.</p><p className="contact-disclosure">This preview creates a project brief you can download. It does not send an enquiry or store your details on a server. Agency contact details will be added before launch.</p></div>
-<BriefForm /></div></Reveal></section>
+        <Reveal group="work-copy"><div className="section-top"><div className="eyebrow">01 / ILLUSTRATIVE WORKFLOWS</div><p>Where repeated work<br />can become a reliable flow.</p></div>
+          <h2 className="section-title">Practical flows.<br /><em>Real possibilities.</em></h2>
+          <p className="concept-note">Illustrative automation blueprints. These are proposed workflows, not client deployments.</p>
+        </Reveal><Projects />
+      </section>
+      <section className="manifesto section-pad" id="studio"><Reveal group="studio-content">
+        <div className="eyebrow">02 / WHY WE EXIST</div>
+        <p className="manifesto-text">Less chasing.<br />Fewer handoffs.<br />More room for<br /><em>meaningful work.</em></p>
+        <div className="manifesto-bottom"><span className="big-star" aria-hidden="true">✳</span>
+          <p>We’re building an agency around a practical idea: the tools your team already uses should work together.</p>
+          <p>We design data pipelines, automate repeatable processes, and make operational information easier to trust. Every engagement starts by understanding how the work gets done.</p>
+        </div>
+      </Reveal></section>
+      <section className="expertise section-pad" id="expertise">
+        <Reveal group="expertise-copy" className="section-top"><span className="eyebrow">03 / HOW WE CAN HELP</span><h2>Connected systems.<br /><em>Useful outcomes.</em></h2></Reveal>
+        <Reveal group="expertise-services"><div className="services">
+          {services.map((service, index) => <details key={service.title} open={index === 0}>
+            <Feedback as="summary"><span>{String(index + 1).padStart(2, '0')}</span><h3>{service.title}</h3><span className="plus">+</span></Feedback>
+            <div className="service-body"><p>{service.copy}</p><ul>{service.items.map(item => <li key={item}>{item}</li>)}</ul></div>
+          </details>)}
+        </div><p className="fine-print">Proposed service scope. Tool access, data requirements, and delivery details are agreed during discovery.</p></Reveal>
+      </section>
+      <section id="approach" className="process section-pad">
+        <Reveal className="section-top" group="process-intro"><span className="eyebrow">04 / HOW WE WORK</span><p>Start with one workflow.<br />Build from there.</p></Reveal>
+        <div className="process-layout"><Reveal as="h2" group="process-heading">Clear inputs.<br /><em>Useful outcomes.</em><span className="process-mark" aria-hidden="true">↳</span></Reveal>
+          <div className="steps">{steps.map((step, index) => <Reveal as="article" key={step.label} group={'process-step-' + index} progression count={4} index={index}>
+            <span>{String(index + 1).padStart(2, '0')} / {step.label}</span><h3>{step.title}</h3><p>{step.copy}</p><small>Output: {step.output}</small>
+          </Reveal>)}</div>
+        </div>
+      </section>
+      <section className="contact section-pad" id="contact"><Reveal group="contact-content">
+        <div className="eyebrow">05 / FIND YOUR FIRST FLOW</div><h2>What should<br /><em>work better?</em><span aria-hidden="true">↗</span></h2>
+        <div className="contact-layout"><div className="contact-copy"><p>Tell us what your team repeats.<br />Let’s find a better flow.</p>
+          <p className="contact-disclosure">This preview creates an automation brief you can download. It does not send an enquiry or store your details on a server. Agency contact details will be added before launch.</p>
+        </div><BriefForm /></div>
+      </Reveal></section>
     </main>
-    <footer><Reveal className="footer-promo" group="footer-promo"><a className="wordmark" href="#" aria-label="FORME home">forme<span>®</span></a><p>A little curiosity goes a long way.</p></Reveal><span>Working identity · Concept edition</span><a href="#main">Back to top ↑</a></footer>
+    <footer><Reveal className="footer-promo" group="footer-promo"><a className="wordmark" href="#" aria-label="FORME home">forme<span>®</span></a><p>Connected data. Less manual work.</p></Reveal>
+      <span>Working identity · Data automation</span><a href="#main">Back to top ↑</a>
+    </footer>
   </>;
 }

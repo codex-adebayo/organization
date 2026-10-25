@@ -51,3 +51,9 @@ The root [AGENTS.md](AGENTS.md) connects future repository agents to the vendore
 The agency story uses react-kino. Project exits use AnimatePresence from motion/react. See [the motion system](docs/motion-system.md) for boundaries, accessibility decisions, and update guidance.
 
 Run `npm run check:story` to validate/export the portable story and inspect it with Kino doctor. The exported document is uploaded in the cloud review artifact alongside browser screenshots.
+
+## Data automation agency
+
+The working positioning is now a data automation agency: “Less busywork. More flow.” Services, illustrative workflow blueprints, process copy, metadata, and the downloadable automation brief follow that direction.
+
+The existing panel hero includes a new Connect → Automate → Act scroll section. Desktop links scroll progress to the golden record; phone/reduced-motion layouts preserve a complete reading experience. See [content and behaviour notes](docs/data-automation-content.md).

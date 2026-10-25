@@ -3,14 +3,14 @@ test('complete agency journey, projects and brief download', async ({ page }, te
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Good ideas.');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Less busywork.');
   if (testInfo.project.name === 'mobile') {
     await page.getByRole('button', { name: 'Menu' }).click();
     await expect(page.locator('#navigation')).toBeVisible();
   }
-  await page.locator('#navigation').getByRole('link', { name: /Work/ }).click();
+  await page.locator('#navigation').getByRole('link', { name: /Use cases/ }).click();
   await expect(page).toHaveURL(/#work$/);
-  for (const [key, name] of [['terrain', 'Terrain'], ['ondo', 'Ondo'], ['folio', 'Folio']]) {
+  for (const [key, name] of [['terrain', 'Lead intake'], ['ondo', 'Reporting loop'], ['folio', 'Operations handoff']]) {
     const trigger = page.locator('[data-project="' + key + '"]');
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
@@ -20,18 +20,20 @@ test('complete agency journey, projects and brief download', async ({ page }, te
     await expect(page.getByRole('dialog')).not.toBeVisible();
     await expect(trigger).toBeFocused();
   }
-  await page.locator('#shift').scrollIntoViewIfNeeded();
-  await page.locator('#shift').click();
-  await expect(page.locator('.hero-stage')).toHaveClass(/shifted/);
+  await page.locator('#hero-motion-toggle').scrollIntoViewIfNeeded();
+  await page.locator('#hero-motion-toggle').click();
+  await expect(page.locator('.hero-futuristic [data-hero-scene]')).toHaveAttribute('data-paused', 'true');
+  await page.locator('#hero-motion-toggle').click();
+  await expect(page.locator('.hero-futuristic [data-hero-scene]')).toHaveAttribute('data-paused', 'false');
   await page.getByLabel('Your name').fill('A Curious Founder');
   await page.getByLabel('Email address').fill('founder@example.com');
   await page.getByLabel('Company / website').fill('Example Studio');
-  await page.getByLabel('What would you like to create?').fill('A distinctive website for our new business.');
+  await page.getByLabel('What would you like to automate?').fill('A distinctive website for our new business.');
   await page.getByLabel('Investment in mind').selectOption({ label: 'Help me scope it' });
   await page.getByLabel('Ideal timing').selectOption({ label: 'Within 1–3 months' });
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Create my project brief' }).click();
-  expect((await download).suggestedFilename()).toBe('project-brief.txt');
+  await page.getByRole('button', { name: 'Create my automation brief' }).click();
+  expect((await download).suggestedFilename()).toBe('automation-brief.txt');
   await expect(page.getByRole('status')).toContainText('Nothing has been sent');
   expect(errors).toEqual([]);
 });
@@ -44,10 +46,10 @@ test('reduced motion, mobile widths and keyboard dialog access', async ({ page }
     await expect.poll(() => page.evaluate(() => {
       if (document.documentElement.scrollWidth <= innerWidth) return null;
       return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+        elements: Array.from(document.querySelectorAll('main, main *')).map(element => {
           const bounds = element.getBoundingClientRect();
           return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
-        }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
+        }).filter(item => item.right > innerWidth + 1 && !String(item.className).includes('hero-')).slice(-30) };
     })).toBeNull();
   }
   await page.locator('[data-project="terrain"]').focus();
@@ -76,8 +78,8 @@ test('capture review screenshots', async ({ page }, testInfo) => {
 
 test('Next.js metadata, assets and missing routes', async ({ page, request }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle('FORME — Independent digital studio');
-  expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('digital studio');
+  await expect(page).toHaveTitle('FORME — Data automation agency');
+  expect(await page.locator('meta[name="description"]').getAttribute('content')).toContain('data');
   expect((await request.get('/favicon.svg')).status()).toBe(200);
   expect((await request.get('/does-not-exist')).status()).toBe(404);
 });
@@ -111,7 +113,7 @@ test('story stays readable on narrow screens and with reduced motion', async ({ 
     await expect.poll(() => page.evaluate(() => {
       if (document.documentElement.scrollWidth <= innerWidth) return null;
       return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+        elements: Array.from(document.querySelectorAll('main, main *')).map(element => {
           const bounds = element.getBoundingClientRect();
           return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
         }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
@@ -122,7 +124,7 @@ test('story stays readable on narrow screens and with reduced motion', async ({ 
   await page.goto('/');
   await expect.poll(() => page.locator('[data-kino-content]').first().evaluate(element => getComputedStyle(element.parentElement).position)).not.toBe('sticky');
   await expect(page.locator('body')).not.toHaveClass(/motion-ready/);
-  await expect(page.getByRole('heading', { name: 'Then, make it unmistakable.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Keep people in control.' })).toBeVisible();
 });
 
 test('dialog immediately closes and restores focus across repeated open and close actions', async ({ page }) => {
@@ -148,8 +150,8 @@ test('story is complete without JavaScript or external fonts', async ({ browser 
   await context.route('**/*fonts*', route => route.abort());
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:8000/');
-  await expect(page.getByRole('heading', { name: 'First, find the idea.' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Then, make it unmistakable.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Find the work worth automating.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Keep people in control.' })).toBeVisible();
   expect(await page.locator('[data-kino-layer]').count()).toBe(4);
   await context.close();
 });

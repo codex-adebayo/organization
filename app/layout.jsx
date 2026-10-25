@@ -1,7 +1,7 @@
 import './globals.css';
 export const metadata = {
-  title: { default: 'FORME — Independent digital studio', template: '%s | FORME' },
-  description: 'A digital studio concept bringing strategy, identity, and engineering together. Explore our approach and shape your next project.',
+  title: { default: 'FORME — Data automation agency', template: '%s | FORME' },
+  description: 'Connect your tools, automate repeatable workflows, and turn scattered data into useful decisions. Explore FORME’s data automation approach and create an automation brief.',
   icons: { icon: '/favicon.svg' }
 };
 export const viewport = { themeColor: '#e9e6df' };

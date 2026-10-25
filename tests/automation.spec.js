@@ -60,7 +60,7 @@ test('desktop scrolling advances the golden record and active workflow stage', a
 
 test('phone and reduced-motion layouts keep the complete workflow accessible', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const width of [320, 390, 700, 900, 1440]) {
+  for (const width of [320, 390, 700, 701, 768, 900, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

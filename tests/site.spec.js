@@ -49,7 +49,7 @@ test('reduced motion, mobile widths and keyboard dialog access', async ({ page }
         elements: Array.from(document.querySelectorAll('main, main *')).map(element => {
           const bounds = element.getBoundingClientRect();
           return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
-        }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
+        }).filter(item => item.right > innerWidth + 1 && !String(item.className).includes('hero-')).slice(-30) };
     })).toBeNull();
   }
   await page.locator('[data-project="terrain"]').focus();

@@ -102,3 +102,8 @@
 @media(max-width:700px){.automation-flow{padding-top:55px}.flow-heading h2{font-size:42px}.automation-flow-layout{display:flex;flex-direction:column;gap:25px}.automation-flow-visual{position:relative;top:auto;order:-1;width:100%;min-height:380px;aspect-ratio:1.1}.flow-chapters{width:100%}.flow-chapter{min-height:auto;padding:42px 0}.flow-chapter h3{font-size:32px}.flow-chapter>p{font-size:14px}.flow-visual-heading .eyebrow{font-size:9px}}
 @media(max-width:390px){.flow-heading h2{font-size:36px}.flow-chapter h3{font-size:28px}.automation-flow-visual{min-height:350px}.flow-phase-nav{gap:5px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.automation-flow-visual{position:relative;top:auto}.flow-chapter{min-height:auto;padding:42px 0}}
+
+/* Keep long workflow labels inside tablet grid tracks without clipping content. */
+.automation-flow-layout{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+.flow-chapters,.flow-chapter,.automation-flow-visual{min-width:0}
+.flow-chapter h3,.flow-chapter p,.flow-example{overflow-wrap:anywhere}

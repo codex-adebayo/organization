@@ -46,7 +46,7 @@ test('reduced motion, mobile widths and keyboard dialog access', async ({ page }
     await expect.poll(() => page.evaluate(() => {
       if (document.documentElement.scrollWidth <= innerWidth) return null;
       return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+        elements: Array.from(document.querySelectorAll('main, main *')).map(element => {
           const bounds = element.getBoundingClientRect();
           return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
         }).filter(item => item.right > innerWidth + 1).slice(0, 20) };
@@ -113,7 +113,7 @@ test('story stays readable on narrow screens and with reduced motion', async ({ 
     await expect.poll(() => page.evaluate(() => {
       if (document.documentElement.scrollWidth <= innerWidth) return null;
       return { viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-        elements: Array.from(document.querySelectorAll('.agency-story, .agency-story *')).map(element => {
+        elements: Array.from(document.querySelectorAll('main, main *')).map(element => {
           const bounds = element.getBoundingClientRect();
           return { tag: element.tagName, className: element.className, width: bounds.width, right: bounds.right };
         }).filter(item => item.right > innerWidth + 1).slice(0, 20) };

@@ -24,7 +24,7 @@ The browser evaluates the cubic Bézier continuously. No timers schedule lower s
 
 | Rule | Implementation |
 | --- | --- |
-| 1 — Entire scope, replace conflicts | Hero through footer has 20 named groups. Removed the old Motion.jsx observer and CSS reveal engine. Removed Kino tracks and dialog exits. Kept layout, colours, type, content, and working interaction feedback. |
+| 1 — Entire scope, replace conflicts | Hero through footer has 19 named groups. Removed the old Motion.jsx observer and CSS reveal engine. Removed Kino tracks and dialog exits. Kept layout, colours, type, content, and working interaction feedback. |
 | 2 — Non-overlapping groups | Reveal accepts semantic element types so grids and sticky positioning remain intact. No Reveal contains another. Related hero copy/actions and contact copy/form move together. Story copy/media and portfolio/service collections are separate. Navigation, story control, backgrounds and footer utilities are excluded. |
 | 3 — Exact tween and states | EFFECTS and entranceSettings in lib/effects-contract.mjs define easing, timing, opacity, vertical travel and media scale. No keyframe contains blur, rotation, X travel, spring, bounce or exit. |
 | 4 — Mount/view triggering, once | useEntrance starts hero groups on mount. Each scroll group has an independent IntersectionObserver with 0.15 or tall-group 0. ResizeObserver and resize events update that threshold. A ref latch prevents replay. |
@@ -36,7 +36,7 @@ The browser evaluates the cubic Bézier continuously. No timers schedule lower s
 
 ## Coverage inventory
 
-- Hero: hero-copy; hero-media.
+- Hero: hero-copy. The later futuristic-background request replaces hero-media with a decorative, non-entrance scene. See futuristic-hero.md.
 - Story: story-heading; clarity copy/media; expression copy/media. Kino retains the same chapters and desktop pinning; the shared hook replaces its scroll-interpolated layer entrances.
 - Work: work-copy; work-projects (one collection).
 - Studio: studio-content (one mixed-content statement).

@@ -11,12 +11,13 @@ export default function HomePage() {
     <a className="skip" href="#main">Skip to content</a>
     <Header />
     <main id="main">
-      <section className="hero" aria-labelledby="hero-title">
-<Reveal phase="hero" group="hero-copy">
+      <section className="hero hero-futuristic" aria-labelledby="hero-title">
+<HeroStage />
+<Reveal phase="hero" group="hero-copy" className="hero-copy-overlay relative z-20">
 <div className="eyebrow"><span className="status-dot"></span> A new perspective on digital <span className="edition">STUDIO CONCEPT / VOL. 01</span></div>
 <h1 id="hero-title">Good ideas.<br /><span className="hero-bottom"><em>Unforgettable</em><span className="asterisk" aria-hidden="true">✳</span></span>experiences.</h1>
 <div className="hero-foot"><p>We bring clarity to the complex.<br />And a little unexpected to everything.</p><a className="circle-link" href="#work"><span>Discover our thinking</span><span className="round-arrow">↓</span></a></div>
-</Reveal><Reveal phase="hero" kind="media" group="hero-media"><HeroStage /></Reveal></section>
+</Reveal></section>
       <AgencyStory />
       <section id="work" className="work section-pad">
 <Reveal group="work-copy"><div className="section-top"><div className="eyebrow">01 / SELECTED EXPLORATIONS</div><p>Different challenges.<br />The same restless curiosity.</p></div>

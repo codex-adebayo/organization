@@ -13,14 +13,15 @@ These are repository-local guidance for any agent working here. No separate agen
 ## Design context
 Creative agency marketing site. Default weighting: Jakub for production polish; Jhey for bounded narrative exploration; Emil for navigation, forms, and keyboard efficiency. Existing user direction establishes this context; continue within the authorised task without repeating preference confirmations unless the scope changes materially.
 
-Give each motion a purpose: continuity, orientation, feedback, or narrative. Use short asymmetric enter/exit timing, stable keys, and opacity/transform. Avoid perpetual decorative loops, hover-scale on every element, and staggered paragraphs. Keyboard actions and reduced motion should complete immediately. Keep native document scrolling.
+Give each motion a purpose: continuity, orientation, feedback, or narrative. The user’s Effects specification is implemented in lib/effects-contract.mjs and documented in docs/react-effects.md. Those exact constraints supersede general skill recipes: no blur, rotation, horizontal travel, bounce, or exit animations; only 2–4 progression siblings may stagger. Preserve established feedback; use the shared feedback hook where it is missing. Keyboard actions and reduced motion complete immediately. Keep native document scrolling.
 
 ## Stack and responsibilities
 - App Router server components own content and section structure.
 - Motion for React imports come from `motion/react`; do not add a second Framer Motion installation.
 - Kino owns only the bounded agency story. Keep the portable document in `lib/agency-story.mjs` and component registrations in `components/AgencyStory.jsx`.
-- Motion owns interactive presence transitions. Do not let Motion and Kino animate the same element.
-- Keep the native dialog top layer and focus trap until its exit finishes.
+- useEntrance owns page entrances; Kino retains story layout but has no entrance tracks. Never nest entrance groups.
+- useInteractionFeedback owns fallback control feedback. Feedback inside an entrance group is allowed.
+- Native dialogs close immediately and restore focus. Do not reintroduce exit animations.
 - Start stories in reading mode on the server, then enhance after hydration. Respect narrow screens, short viewports, reduced motion, and the explicit reading control.
 - Keep Studio/editor code out of the public experience unless an authoring route is requested.
 

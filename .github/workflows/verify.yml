@@ -18,6 +18,7 @@ jobs:
           node-version: '22'
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run check
+      - run: npm run test:effects
       - run: npm run check:story
       - run: npm run build
       - run: npx playwright install --with-deps chromium

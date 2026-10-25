@@ -62,7 +62,7 @@ test('content remains available without JavaScript', async ({ browser }) => {
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:8000/');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.locator('#work > h2')).toBeVisible();
+  await expect(page.locator('#work .section-title')).toBeVisible();
   await expect(page.locator('#contact h2')).toBeVisible();
   await context.close();
 });
@@ -82,24 +82,18 @@ test('Next.js metadata, assets and missing routes', async ({ page, request }) =>
   expect((await request.get('/does-not-exist')).status()).toBe(404);
 });
 
-test('Kino story progresses on desktop and offers a reading choice', async ({ page }) => {
+test('Kino layout retains a reading choice without duplicate scroll tracks', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
-  const story = page.locator('[data-kino-story]');
-  await expect(story).toHaveCount(1);
-  await expect(story.locator('[data-kino-scene]')).toHaveCount(2);
+  await expect(page.locator('[data-kino-story]')).toHaveCount(1);
+  await expect(page.locator('[data-kino-scene]')).toHaveCount(2);
   await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'false');
-  const scene = page.locator('[data-kino-scene="clarity"]');
-  const layer = scene.locator('[data-kino-layer="clarity-visual"]');
-  await scene.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
-  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBeLessThan(0.9);
-  await scene.evaluate(element => window.scrollTo({ top: element.getBoundingClientRect().top + scrollY + innerHeight * 0.65, behavior: 'instant' }));
-  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBeGreaterThan(0.98);
   await page.getByRole('button', { name: 'Read without motion' }).click();
   await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'true');
   await expect(page.getByRole('button', { name: 'Explore with scroll' })).toHaveAttribute('aria-pressed', 'true');
-  await expect.poll(() => layer.evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
+  for (const group of await page.locator('[data-kino-layer] [data-effect-group]').all()) {
+    await expect(group).toHaveAttribute('data-effect-state', 'complete');
+  }
   await page.getByRole('button', { name: 'Explore with scroll' }).click();
   await expect(page.locator('#agency-story-content')).toHaveAttribute('data-reading', 'false');
 });
@@ -131,7 +125,7 @@ test('story stays readable on narrow screens and with reduced motion', async ({ 
   await expect(page.getByRole('heading', { name: 'Then, make it unmistakable.' })).toBeVisible();
 });
 
-test('animated dialog restores focus across repeated open and close actions', async ({ page }) => {
+test('dialog immediately closes and restores focus across repeated open and close actions', async ({ page }) => {
   await page.goto('/');
   const trigger = page.locator('[data-project="terrain"]');
   for (let cycle = 0; cycle < 3; cycle++) {

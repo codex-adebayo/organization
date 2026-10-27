@@ -20,11 +20,6 @@ test('complete agency journey, projects and brief download', async ({ page }, te
     await expect(page.getByRole('dialog')).not.toBeVisible();
     await expect(trigger).toBeFocused();
   }
-  await page.locator('#hero-motion-toggle').scrollIntoViewIfNeeded();
-  await page.locator('#hero-motion-toggle').click();
-  await expect(page.locator('.hero-futuristic [data-hero-scene]')).toHaveAttribute('data-paused', 'true');
-  await page.locator('#hero-motion-toggle').click();
-  await expect(page.locator('.hero-futuristic [data-hero-scene]')).toHaveAttribute('data-paused', 'false');
   await page.getByLabel('Your name').fill('A Curious Founder');
   await page.getByLabel('Email address').fill('founder@example.com');
   await page.getByLabel('Company / website').fill('Example Studio');

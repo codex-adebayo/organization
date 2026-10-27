@@ -120,7 +120,7 @@ test('feedback has no delay, is interruptible, and reduced motion cancels playba
   await recordPlayback(page);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
-  const button = page.locator('#hero-motion-toggle');
+  const button = page.locator('#hero-brief-link');
   await button.scrollIntoViewIfNeeded();
   await expect(page.locator('[data-effect-group="hero-copy"]')).toHaveAttribute('data-effect-state', 'complete');
   if (info.project.name === 'desktop') {

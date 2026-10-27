@@ -7,7 +7,8 @@ An editorial digital agency website built with the Next.js App Router and React.
 - `app/layout.jsx`: document shell, metadata, theme colour, and global styles.
 - `app/page.jsx`: server-rendered homepage content and section structure.
 - `components/Header.jsx`: responsive navigation.
-- `components/HeroStage.jsx`: interactive hero composition.
+- `app/page.jsx` and `app/globals.css`: static cinematic hero composition.
+- `components/HeroScrollSection.jsx`: server-rendered three-stage workflow reading section.
 - `components/Projects.jsx`: portfolio concepts and accessible native dialogs.
 - `components/BriefForm.jsx`: validated, browser-only project brief download.
 - `components/Motion.jsx`: scroll reveals with cleanup and reduced-motion support.
@@ -56,4 +57,4 @@ Run `npm run check:story` to validate/export the portable story and inspect it w
 
 The working positioning is now a data automation agency: “Less busywork. More flow.” Services, illustrative workflow blueprints, process copy, metadata, and the downloadable automation brief follow that direction.
 
-The existing panel hero includes a new Connect → Automate → Act scroll section. Desktop links scroll progress to the golden record; phone/reduced-motion layouts preserve a complete reading experience. See [content and behaviour notes](docs/data-automation-content.md).
+The hero now uses a static cinematic composition and a compact Connect → Automate → Act reading section. Both animated panel scenes and their controls have been removed. See [the cinematic direction](docs/cinematic-direction.md) for the current design and reference interpretation; older futuristic-hero and scroll-scene documents describe the superseded design.

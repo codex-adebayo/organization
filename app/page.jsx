@@ -1,5 +1,4 @@
 import Header from '../components/Header';
-import HeroStage from '../components/HeroStage';
 import HeroScrollSection from '../components/HeroScrollSection';
 import Projects from '../components/Projects';
 import BriefForm from '../components/BriefForm';
@@ -25,14 +24,16 @@ export default function HomePage() {
     <a className="skip" href="#main">Skip to content</a><Header />
     <main id="main">
       <section className="hero-experience" aria-labelledby="hero-title" data-hero-experience>
-        <div className="hero hero-futuristic"><HeroStage />
-          <Reveal phase="hero" group="hero-copy" className="hero-copy-overlay relative z-20">
+        <div className="hero hero-cinema">
+          <div className="cinema-horizon" aria-hidden="true" />
+          <Reveal phase="hero" group="hero-copy" className="cinema-copy">
             <div className="eyebrow"><span className="status-dot" />DATA AUTOMATION, WITH PURPOSE<span className="edition">DATA / WORKFLOWS / INTELLIGENCE</span></div>
-            <h1 id="hero-title">Less busywork.<br /><span className="hero-bottom"><em>More flow.</em><span className="asterisk" aria-hidden="true">✳</span></span></h1>
+            <h1 id="hero-title">Less busywork.<br /><em>More flow.</em></h1>
             <div className="hero-foot"><p>Connect your tools. Automate repeatable work. Turn scattered information into useful decisions.</p>
               <a className="circle-link" href="#hero-flow"><span>Explore the data journey</span><span className="round-arrow">↓</span></a></div>
-            <a className="hero-brief-link" href="#contact">Scope an automation ↗</a>
+            <Feedback as="a" id="hero-brief-link" className="hero-brief-link" href="#contact">Scope an automation <span aria-hidden="true">↗</span></Feedback>
           </Reveal>
+          <div className="cinema-caption"><span>FROM COMPLEXITY TO CLARITY</span><span>CONNECTED SYSTEMS. HUMAN DECISIONS.</span></div>
         </div>
         <HeroScrollSection />
       </section>

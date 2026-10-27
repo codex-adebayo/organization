@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import HeroSculpture from '../components/HeroSculpture';
 import HeroScrollSection from '../components/HeroScrollSection';
 import Projects from '../components/Projects';
 import BriefForm from '../components/BriefForm';
@@ -33,6 +34,7 @@ export default function HomePage() {
               <a className="circle-link" href="#hero-flow"><span>Explore the data journey</span><span className="round-arrow">↓</span></a></div>
             <Feedback as="a" id="hero-brief-link" className="hero-brief-link" href="#contact">Scope an automation <span aria-hidden="true">↗</span></Feedback>
           </Reveal>
+          <HeroSculpture />
           <div className="cinema-caption"><span>FROM COMPLEXITY TO CLARITY</span><span>CONNECTED SYSTEMS. HUMAN DECISIONS.</span></div>
         </div>
         <HeroScrollSection />

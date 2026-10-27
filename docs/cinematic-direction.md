@@ -65,12 +65,17 @@ bronze (#806B49) provide soft tonal variation. The copy has an ink veil; workflo
 forms and navigation keep solid backgrounds. The fallback uses the same muted
 palette in CSS. No gradient is used outside the hero sculpture.
 
-@shadergradient/react 2.x is MIT-licensed:
-https://github.com/ruucm/shadergradient
-Its default motion, grain, looping, camera transitions and additional lighting
-are disabled. Camera settings match the existing sculpture, and frameloop=demand
-keeps GPU rendering idle after setup. A browser check verifies actual shader
-rendering and that the frame count stops advancing, as well as shader errors.
+The colour-blending expression is adapted from the default plane fragment in
+https://github.com/ruucm/shadergradient (MIT © ruucm, stone-skipper; notice in
+notices/shadergradient-MIT.txt). The published package references physical shader
+chunks removed in Three.js r180. The final implementation keeps its three-colour
+smoothstep/mix approach in a small ShaderMaterial using the current colour-space
+chunk; it does not install the incompatible package or its camera controls.
+
+A fixed broad relief field supplies tonal variation. There is no time uniform,
+frame callback, animation, grain, camera transition or additional light.
+The existing frameloop=demand keeps rendering idle after setup. Browser checks
+verify shader compilation, actual gradient rendering and a stable frame count.
 No environment assets are fetched by the gradient.
 
 Future feature branches and pull requests start from and target staging.

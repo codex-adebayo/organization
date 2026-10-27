@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { CatmullRomCurve3, Shape, Vector3, PMREMGenerator } from 'three';
 import HeroAtmosphere from './HeroAtmosphere';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 function Studio({ onReady, onLost }) {
   const { gl, scene, invalidate } = useThree();

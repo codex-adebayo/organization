@@ -1,7 +1,7 @@
 # Agency design and engineering
 
 ## Project and working agreement
-This is the Next.js agency website, separate from the old local finance project. The user prefers GitHub-based source work and cloud builds. Use the connected GitHub tools and GitHub Actions unless the user changes that preference. Preserve concurrent changes and deliver reviewable pull requests. Do not merge or publish unless requested.
+This is the Next.js agency website, separate from the old local finance project. The user prefers GitHub-based source work and cloud builds. Use the connected GitHub tools and GitHub Actions unless the user changes that preference. Preserve concurrent changes and deliver reviewable pull requests. Create feature branches from staging and target staging for all new pull requests; never target main unless the user explicitly requests it. Do not merge or publish unless requested.
 
 FORME is a working name. Use-case examples are illustrative automation blueprints, not client deployments. Never invent client relationships, testimonials, metrics, team details, or enquiry delivery.
 
@@ -18,7 +18,7 @@ Give each motion a purpose: continuity, orientation, feedback, or narrative. The
 ## Stack and responsibilities
 - App Router server components own content and section structure.
 - Motion for React imports come from `motion/react`; do not add a second Framer Motion installation.
-- The hero is a static cinematic composition followed by a server-rendered Connect → Automate → Act reading section. Keep natural scrolling and the complete phone/reduced-motion layout. See docs/cinematic-direction.md.
+- The hero includes a still graphite sculpture and muted Shader Gradient atmosphere in one demand-rendered canvas, with a static mobile/reduced-motion/WebGL fallback. It is followed by a server-rendered Connect → Automate → Act reading section. Keep natural scrolling and the complete phone/reduced-motion layout. See docs/cinematic-direction.md.
 - Kino owns only the bounded agency story. Keep the portable document in `lib/agency-story.mjs` and component registrations in `components/AgencyStory.jsx`.
 - The cinematic redesign supersedes the earlier futuristic hero: both decorative animated panel scenes and their pause controls are removed. Do not restore them unless requested.
 - useEntrance owns page entrances; Kino retains story layout but has no entrance tracks. Never nest entrance groups.

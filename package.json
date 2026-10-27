@@ -20,7 +20,12 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "motion": "14.6.0",
-    "react-kino": "0.6.0"
+    "react-kino": "0.6.0",
+    "@react-three/fiber": "9.4.0",
+    "three": "0.180.0",
+    "@shadergradient/react": "2.4.24",
+    "three-stdlib": "2.36.0",
+    "camera-controls": "2.9.0"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

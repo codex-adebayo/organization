@@ -65,7 +65,7 @@ bronze (#806B49) provide soft tonal variation. The copy has an ink veil; workflo
 forms and navigation keep solid backgrounds. The fallback uses the same muted
 palette in CSS. No gradient is used outside the hero sculpture.
 
-@shadergradient/react 2.4.24 is MIT-licensed:
+@shadergradient/react 2.x is MIT-licensed:
 https://github.com/ruucm/shadergradient
 Its default motion, grain, looping, camera transitions and additional lighting
 are disabled. Camera settings match the existing sculpture, and frameloop=demand

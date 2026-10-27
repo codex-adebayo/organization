@@ -32,3 +32,27 @@ of both scenes and their controls, anchor destinations, reduced motion, responsi
 overflow, server-rendered chapters and the existing enquiry/dialog journeys.
 The browser-review artifact contains desktop and mobile screenshots; automated
 checks alone do not establish real-device performance.
+
+## Graphite convergence sculpture
+
+The next iteration adds one still sculpture alongside the hero copy: three graphite
+channels with gold seams converge at a warm metallic core. The workflow reading
+section and the removed panel animations are unchanged.
+
+React Three Fiber 9.4.0 (React 19) and Three.js 0.180.0 power an isolated,
+dynamically imported client scene. Geometry is procedural and original. A local
+SVG poster uses the same three-channel silhouette and palette, requires no
+JavaScript, and remains the default below 1100px, with reduced motion, during
+loading, and on renderer failure or context loss. The scene is decorative,
+hidden from assistive technology and does not intercept pointer or keyboard input.
+
+The canvas renders on demand, with no useFrame callback, autoplay, camera motion,
+scroll subscriptions or pointer tracking. Pixel ratio is capped at 1.5. Materials
+use a procedural studio environment and warm lights; no remote models, textures
+or HDR downloads are required. Three.js resources are disposed on unmount.
+
+Sources: [React Three Fiber](https://github.com/pmndrs/react-three-fiber) provides
+the React renderer; [Three.js](https://github.com/mrdoob/three.js) provides geometry,
+materials and RoomEnvironment. Both are MIT-licensed dependencies. No external
+model or example artwork was copied. Performance on actual devices remains
+unmeasured; the static fallback protects the reading and enquiry experience.

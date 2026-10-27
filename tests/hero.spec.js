@@ -37,3 +37,54 @@ test('static hero and all journey chapters render without JavaScript', async ({ 
   await expect(page.getByRole('heading', { name: 'Make the next decision clearer.' })).toBeVisible();
   await context.close();
 });
+
+test('mobile, reduced motion and unavailable WebGL retain the sculpture poster', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('[data-sculpture]')).toHaveAttribute('data-renderer', 'poster');
+  await expect(page.locator('[data-sculpture] canvas')).toHaveCount(0);
+  await expect(page.locator('.sculpture-poster')).toBeVisible();
+  expect(await page.locator('.sculpture-poster').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('[data-sculpture] canvas')).toHaveCount(0);
+  await expect(page.locator('.sculpture-poster')).toBeVisible();
+});
+
+test('desktop WebGL renders a still scene and recovers to its poster after context loss', async ({ page }, info) => {
+  test.skip(info.project.name !== 'desktop', 'WebGL enhancement is desktop-only');
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const host = page.locator('[data-sculpture]');
+  await expect(host).toHaveAttribute('data-renderer', 'webgl', { timeout: 30000 });
+  await expect(host.locator('canvas')).toBeVisible();
+  await expect(page.locator('.sculpture-poster')).toBeHidden();
+  // No continuously changing object or light: demand rendering stays idle.
+  await page.waitForTimeout(1000);
+  const first = await host.screenshot();
+  await page.waitForTimeout(250);
+  expect(await host.screenshot()).toEqual(first);
+  await page.locator('.hero-cinema').screenshot({ path: info.outputPath('sculpture-desktop.png') });
+  await info.attach('3D hero', { path: info.outputPath('sculpture-desktop.png'), contentType: 'image/png' });
+  await host.locator('canvas').evaluate(canvas => {
+    canvas.dispatchEvent(new Event('webglcontextlost', { cancelable: true }));
+  });
+  await expect(host).toHaveAttribute('data-renderer', 'poster');
+  await expect(page.locator('.sculpture-poster')).toBeVisible();
+});
+
+test('WebGL creation failure leaves the fallback and enquiry link available', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      return String(type).includes('webgl') ? null : original.call(this, type, ...args);
+    };
+  });
+  await page.goto('/');
+  await expect(page.locator('.sculpture-poster')).toBeVisible();
+  await expect(page.locator('[data-sculpture]')).toHaveAttribute('data-renderer', 'poster');
+  await page.locator('#hero-brief-link').click();
+  await expect(page).toHaveURL(/#contact$/);
+});

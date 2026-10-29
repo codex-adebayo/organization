@@ -1,6 +1,5 @@
 'use client';
 import { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 import Reveal from './effects/Reveal';
 import Feedback from './effects/Feedback';
 
@@ -43,18 +42,18 @@ export default function Projects() {
 
   function openProject(key, button) {
     trigger.current = button;
-    flushSync(() => {
-      setActive(key);
-      setPresent(true);
+    setActive(key);
+    setPresent(true);
+    requestAnimationFrame(() => {
+      if (dialog.current) {
+        dialog.current.scrollTop = 0;
+        dialog.current.querySelector('.dialog-close')?.focus();
+      }
     });
-    if (dialog.current && !dialog.current.open) {
-      dialog.current.showModal();
-      dialog.current.scrollTop = 0;
-    }
   }
   function closeProject() {
-    dialog.current?.close();
     setPresent(false);
+    requestAnimationFrame(() => trigger.current?.focus());
   }
   function backdropClick(event) {
     if (event.target !== dialog.current) return;
@@ -77,9 +76,9 @@ export default function Projects() {
         </Feedback>)}
     </Reveal>
 
-    <dialog ref={dialog} id="project-dialog" aria-labelledby="dialog-title" onClick={backdropClick}
+    <dialog ref={dialog} id="project-dialog" open={present} aria-modal="true" aria-labelledby="dialog-title" onClick={backdropClick}
       onCancel={event => { event.preventDefault(); closeProject(); }}
-      onClose={() => { setPresent(false); trigger.current?.focus(); }}>
+      onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); closeProject(); } }}>
       {present && <div data-project-panel={active}>
         <Feedback type="button" className="dialog-close" aria-label="Close project" onClick={closeProject}>Close ✕</Feedback>
         <span className="eyebrow">ILLUSTRATIVE CONCEPT / {concept.practice.toUpperCase()}</span>

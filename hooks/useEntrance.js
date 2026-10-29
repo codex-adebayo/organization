@@ -33,7 +33,6 @@ export function useEntrance({
       if (completed.current) return;
       completed.current = true;
       clearTimeout(completionTimer);
-      animation?.cancel();
       rest();
       element.dataset.effectState = 'complete';
       if (reason) element.dataset.effectBypass = reason;

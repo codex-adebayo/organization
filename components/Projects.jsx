@@ -59,7 +59,7 @@ export default function Projects() {
   return <>
     <Reveal className="portfolio-projects" group="work-projects">
       {Object.entries(concepts).map(([key, project], index) =>
-        <Feedback preserveHover key={key} type="button" className={'portfolio-project project-' + key + (index === 0 ? ' project-featured' : '')}
+        <Feedback scaleOccupied preserveHover key={key} type="button" className={'portfolio-project project-' + key + (index === 0 ? ' project-featured' : '')}
           data-project={key} onClick={() => openProject(key)} aria-haspopup="dialog" aria-controls="project-dialog">
           <span className="project-visual">
             <span className="project-index">0{index + 1} / 03</span>

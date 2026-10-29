@@ -20,6 +20,7 @@ export function useEntrance({
     let observer;
     let resizeObserver;
     let animation;
+    let completionTimer;
     let threshold;
     let prepared = false;
     const config = entranceSettings({ phase, kind, progression, index, count, phone, reduced: reduced || disabled });
@@ -29,7 +30,9 @@ export function useEntrance({
     });
     const rest = () => { element.style.opacity = '1'; element.style.transform = 'none'; };
     const finish = reason => {
+      if (completed.current) return;
       completed.current = true;
+      clearTimeout(completionTimer);
       animation?.cancel();
       rest();
       element.dataset.effectState = 'complete';
@@ -69,6 +72,7 @@ export function useEntrance({
       observer?.disconnect();
       rest(); // Underlying state is readable if playback is interrupted or unavailable.
       animation = element.animate([config.from, config.to], config.timing);
+      completionTimer = window.setTimeout(() => { if (alive) finish(); }, config.timing.delay + config.timing.duration + 100);
       animation.finished.then(() => { if (alive) finish(); }).catch(() => {});
     }
     function measure() {
@@ -108,6 +112,7 @@ export function useEntrance({
     window.addEventListener('resize', measure);
     return () => {
       alive = false;
+      clearTimeout(completionTimer);
       animation?.cancel();
       observer?.disconnect();
       resizeObserver?.disconnect();

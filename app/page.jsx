@@ -1,85 +1,143 @@
 import Header from '../components/Header';
 import HeroSculpture from '../components/HeroSculpture';
-import HeroScrollSection from '../components/HeroScrollSection';
 import Projects from '../components/Projects';
 import BriefForm from '../components/BriefForm';
 import Reveal from '../components/effects/Reveal';
 import Feedback from '../components/effects/Feedback';
-import AgencyStory from '../components/AgencyStory';
 
-const services = [
-  { title: 'Data integration', copy: 'Connect approved sources and make their data usable together. Define the fields, checks, and sync behaviour before information moves between systems.', items: ['API and tool connections', 'Data mapping and validation', 'Scheduled or event-based sync'] },
-  { title: 'Workflow automation', copy: 'Replace repeatable handoffs with a clear sequence of triggers, rules, and actions. Keep ownership, approval points, and exceptions visible.', items: ['Process and trigger design', 'Routing and approval flows', 'Exception handling'] },
-  { title: 'Reporting & insight', copy: 'Bring operational information into a view your team can act on. Agree consistent metrics, validate refreshes, and surface the changes that need attention.', items: ['Automated reporting', 'Dashboards and useful alerts', 'Data quality checks'] },
-  { title: 'AI-assisted workflows', copy: 'Use AI for a defined task, such as extracting fields or classifying requests. Add review steps and fallbacks before a result drives the next action.', items: ['Document extraction', 'Request classification', 'Human review and safeguards'] }
+const practices = [
+  {
+    id: 'automation', number: '01', label: 'AUTOMATION',
+    title: 'Let the work move itself.',
+    copy: 'We connect the systems your team already uses and turn repeatable handoffs into visible, dependable workflows. People stay in control where judgment matters.',
+    inputs: ['Forms & inboxes', 'CRM & operations', 'Business rules'],
+    flow: ['Capture', 'Decide', 'Route'], checkpoint: 'Human review for exceptions',
+    deliverables: ['Workflow and data mapping', 'Integrations and automations', 'Monitoring, documentation, handover']
+  },
+  {
+    id: 'web-design', number: '02', label: 'WEB DESIGN',
+    title: 'Turn attention into action.',
+    copy: 'We clarify your proposition, design a distinct digital system, and engineer the production experience. Every page has a job and every interaction earns its place.',
+    inputs: ['Positioning', 'Content & journeys', 'Design system'],
+    flow: ['Frame', 'Design', 'Build'], checkpoint: 'Accessible, responsive, production ready',
+    deliverables: ['Digital strategy and messaging', 'UX, visual design, prototyping', 'Next.js engineering and launch support']
+  },
+  {
+    id: 'cybersecurity', number: '03', label: 'CYBERSECURITY',
+    title: 'Find the risk. Prove the fix.',
+    copy: 'We review the web estate, validate meaningful weaknesses, and turn findings into an ordered remediation plan. Consequential actions stay with the right human owner.',
+    inputs: ['Approved scope', 'Web & cloud surface', 'Existing controls'],
+    flow: ['Discover', 'Validate', 'Harden'], checkpoint: 'Evidence and owner approval',
+    deliverables: ['Attack-surface and application review', 'Prioritized remediation guidance', 'Fix verification and security handover']
+  }
 ];
+
 const steps = [
-  { label: 'DISCOVER', title: 'Map the real workflow.', copy: 'Identify the repeated work, source systems, owners, and bottlenecks. Agree what a useful outcome would look like before choosing the tools.', output: 'A workflow map and agreed success criteria.' },
-  { label: 'DESIGN', title: 'Plan the connections.', copy: 'Define the data model, access boundaries, business rules, and review points. Decide how the flow should behave when an input is missing or a step fails.', output: 'An integration plan with clear controls.' },
-  { label: 'BUILD', title: 'Build and validate.', copy: 'Implement a bounded flow, test it with approved sample data, and review both the normal path and the exceptions with the people who use it.', output: 'A working automation with tested conditions.' },
-  { label: 'DELIVER', title: 'Launch with visibility.', copy: 'Set up the agreed monitoring and ownership, document how the flow runs, and make the handover practical for your team.', output: 'A runbook, handover, and operational visibility.' }
+  { number: '01', title: 'Frame the problem.', copy: 'We define the outcome, the people involved, the current system, and the boundaries that matter.', output: 'Brief, scope, success criteria' },
+  { number: '02', title: 'Design the system.', copy: 'We shape the experience, workflow, or security plan before committing effort to production.', output: 'Architecture, prototype, delivery plan' },
+  { number: '03', title: 'Build with evidence.', copy: 'We work in reviewable increments and test the important paths as the solution takes shape.', output: 'Working system and validation' },
+  { number: '04', title: 'Launch with ownership.', copy: 'We document decisions, train the owner, and leave the team with a clear way to operate and improve it.', output: 'Handover, runbook, next priorities' }
 ];
 
 export default function HomePage() {
   return <>
-    <a className="skip" href="#main">Skip to content</a><Header />
+    <a className="skip" href="#main">Skip to content</a>
+    <Header />
     <main id="main">
-      <section className="hero-experience" aria-labelledby="hero-title" data-hero-experience>
-        <div className="hero hero-cinema">
-          <div className="cinema-horizon" aria-hidden="true" />
-          <Reveal phase="hero" group="hero-copy" className="cinema-copy">
-            <div className="eyebrow"><span className="status-dot" />DATA AUTOMATION, WITH PURPOSE<span className="edition">DATA / WORKFLOWS / INTELLIGENCE</span></div>
-            <h1 id="hero-title">Less busywork.<br /><em>More flow.</em></h1>
-            <div className="hero-foot"><p>Connect your tools. Automate repeatable work. Turn scattered information into useful decisions.</p>
-              <a className="circle-link" href="#hero-flow"><span>Explore the data journey</span><span className="round-arrow">↓</span></a></div>
-            <Feedback as="a" id="hero-brief-link" className="hero-brief-link" href="#contact">Scope an automation <span aria-hidden="true">↗</span></Feedback>
+      <section id="top" className="portfolio-hero" aria-labelledby="hero-title">
+        <div className="portfolio-hero-grid">
+          <Reveal phase="hero" group="hero-copy" className="portfolio-hero-copy">
+            <div className="eyebrow"><span className="status-dot" />INDEPENDENT DIGITAL PRACTICE<span className="edition">LAGOS / WORKING GLOBALLY</span></div>
+            <h1 id="hero-title">Build better.<br /><em>Move securely.</em></h1>
+            <p className="portfolio-hero-lede">Automation that removes drag. Websites that make the case. Cybersecurity that protects what matters.</p>
+            <div className="portfolio-hero-actions">
+              <Feedback as="a" id="hero-brief-link" className="primary-action" href="#contact">Start a project <span aria-hidden="true">↗</span></Feedback>
+              <a className="text-action" href="#services">Explore our practice <span aria-hidden="true">↓</span></a>
+            </div>
           </Reveal>
           <HeroSculpture />
-          <div className="cinema-caption"><span>FROM COMPLEXITY TO CLARITY</span><span>CONNECTED SYSTEMS. HUMAN DECISIONS.</span></div>
         </div>
-        <HeroScrollSection />
-      </section>
-      <AgencyStory />
-      <section id="work" className="work section-pad">
-        <Reveal group="work-copy"><div className="section-top"><div className="eyebrow">01 / ILLUSTRATIVE WORKFLOWS</div><p>Where repeated work<br />can become a reliable flow.</p></div>
-          <h2 className="section-title">Practical flows.<br /><em>Real possibilities.</em></h2>
-          <p className="concept-note">Illustrative automation blueprints. These are proposed workflows, not client deployments.</p>
-        </Reveal><Projects />
-      </section>
-      <section className="manifesto section-pad" id="studio"><Reveal group="studio-content">
-        <div className="eyebrow">02 / WHY WE EXIST</div>
-        <p className="manifesto-text">Less chasing.<br />Fewer handoffs.<br />More room for<br /><em>meaningful work.</em></p>
-        <div className="manifesto-bottom"><span className="big-star" aria-hidden="true">✳</span>
-          <p>We’re building an agency around a practical idea: the tools your team already uses should work together.</p>
-          <p>We design data pipelines, automate repeatable processes, and make operational information easier to trust. Every engagement starts by understanding how the work gets done.</p>
-        </div>
-      </Reveal></section>
-      <section className="expertise section-pad" id="expertise">
-        <Reveal group="expertise-copy" className="section-top"><span className="eyebrow">03 / HOW WE CAN HELP</span><h2>Connected systems.<br /><em>Useful outcomes.</em></h2></Reveal>
-        <Reveal group="expertise-services"><div className="services">
-          {services.map((service, index) => <details key={service.title} open={index === 0}>
-            <Feedback as="summary"><span>{String(index + 1).padStart(2, '0')}</span><h3>{service.title}</h3><span className="plus">+</span></Feedback>
-            <div className="service-body"><p>{service.copy}</p><ul>{service.items.map(item => <li key={item}>{item}</li>)}</ul></div>
-          </details>)}
-        </div><p className="fine-print">Proposed service scope. Tool access, data requirements, and delivery details are agreed during discovery.</p></Reveal>
-      </section>
-      <section id="approach" className="process section-pad">
-        <Reveal className="section-top" group="process-intro"><span className="eyebrow">04 / HOW WE WORK</span><p>Start with one workflow.<br />Build from there.</p></Reveal>
-        <div className="process-layout"><Reveal as="h2" group="process-heading">Clear inputs.<br /><em>Useful outcomes.</em><span className="process-mark" aria-hidden="true">↳</span></Reveal>
-          <div className="steps">{steps.map((step, index) => <Reveal as="article" key={step.label} group={'process-step-' + index} progression count={4} index={index}>
-            <span>{String(index + 1).padStart(2, '0')} / {step.label}</span><h3>{step.title}</h3><p>{step.copy}</p><small>Output: {step.output}</small>
-          </Reveal>)}</div>
+        <div className="portfolio-hero-rail" aria-label="Core practices">
+          <span>01 Automation</span><span>02 Web design</span><span>03 Cybersecurity</span>
         </div>
       </section>
-      <section className="contact section-pad" id="contact"><Reveal group="contact-content">
-        <div className="eyebrow">05 / FIND YOUR FIRST FLOW</div><h2>What should<br /><em>work better?</em><span aria-hidden="true">↗</span></h2>
-        <div className="contact-layout"><div className="contact-copy"><p>Tell us what your team repeats.<br />Let’s find a better flow.</p>
-          <p className="contact-disclosure">This preview creates an automation brief you can download. It does not send an enquiry or store your details on a server. Agency contact details will be added before launch.</p>
-        </div><BriefForm /></div>
-      </Reveal></section>
+
+      <section id="services" className="practice-section">
+        <Reveal group="practice-intro" className="practice-intro">
+          <span className="eyebrow">THE PRACTICE / 03 CAPABILITIES</span>
+          <h2>One partner for the system,<br /><em>the experience, and the risk.</em></h2>
+          <p>Each engagement has a clear brief, named decisions, and evidence you can carry forward.</p>
+        </Reveal>
+        <div className="practice-list">
+          {practices.map((practice, index) => <Reveal as="article" key={practice.id} id={practice.id}
+            group={'practice-' + index} progression count={3} index={index} className={'practice-card practice-' + practice.id}>
+            <div className="practice-copy">
+              <div className="practice-kicker"><span>{practice.number}</span><span>{practice.label}</span></div>
+              <h3>{practice.title}</h3><p>{practice.copy}</p>
+              <ul className="practice-deliverables">{practice.deliverables.map(item => <li key={item}>{item}</li>)}</ul>
+              <a href="#contact">Brief this practice ↗</a>
+            </div>
+            <div className="practice-console" aria-label={practice.label + ' delivery model'}>
+              <div className="console-head"><span>FORME / {practice.label}</span><span>READY TO SCOPE</span></div>
+              <div className="console-inputs">{practice.inputs.map(item => <span key={item}>{item}</span>)}</div>
+              <ol>{practice.flow.map((item, flowIndex) => <li key={item}><span>0{flowIndex + 1}</span><strong>{item}</strong></li>)}</ol>
+              <div className="console-check"><span>CHECKPOINT</span><strong>{practice.checkpoint}</strong></div>
+            </div>
+          </Reveal>)}
+        </div>
+      </section>
+
+      <section id="work" className="portfolio-work section-pad">
+        <Reveal group="work-copy" className="portfolio-section-heading">
+          <span className="eyebrow">SELECTED THINKING / SELF-INITIATED</span>
+          <h2>Ideas made<br /><em>specific.</em></h2>
+          <p>Three concept studies show how we turn a broad ambition into a system people can understand, use, and trust.</p>
+        </Reveal>
+        <Projects />
+      </section>
+
+      <section id="approach" className="operating-section">
+        <Reveal group="operating-intro" className="operating-intro">
+          <span className="eyebrow">HOW WE WORK</span>
+          <h2>Agency craft.<br /><em>Operational clarity.</em></h2>
+          <p>A single process adapts to all three practices. The output changes; the discipline stays the same.</p>
+        </Reveal>
+        <div className="operating-grid">
+          {steps.map((step, index) => <Reveal as="article" key={step.number} group={'operating-step-' + index}
+            progression count={4} index={index} className="operating-step">
+            <span>{step.number}</span><h3>{step.title}</h3><p>{step.copy}</p><small>Output / {step.output}</small>
+          </Reveal>)}
+        </div>
+      </section>
+
+      <section className="standards-section">
+        <Reveal group="standards-copy" className="standards-grid">
+          <div><span className="eyebrow">DELIVERY STANDARD</span><h2>Acts with a brief.<br /><em>Hands back proof.</em></h2></div>
+          <div className="standards-list">
+            <p><span>01</span><strong>Bounded by scope</strong><small>Access, actions, and success criteria are agreed before delivery starts.</small></p>
+            <p><span>02</span><strong>Human at the checkpoint</strong><small>Brand, business, and security decisions stay with an accountable person.</small></p>
+            <p><span>03</span><strong>Evidence over theatre</strong><small>Working prototypes, test results, documentation, and verified fixes make progress visible.</small></p>
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="portfolio-contact-section section-pad" id="contact">
+        <Reveal group="contact-content">
+          <div className="eyebrow">START WITH THE REAL PROBLEM</div>
+          <h2>What should<br /><em>work better?</em><span aria-hidden="true">↗</span></h2>
+          <div className="contact-layout">
+            <div className="contact-copy"><p>Bring the repeated work, the ambitious website, or the security concern. We’ll turn it into a clear first engagement.</p>
+              <div className="contact-practices"><span>Automation</span><span>Web design</span><span>Cybersecurity</span></div>
+              <p className="contact-disclosure">This portfolio preview creates a project brief in your browser. It does not send or store your details. Contact delivery will be connected before public launch.</p>
+            </div>
+            <BriefForm />
+          </div>
+        </Reveal>
+      </section>
     </main>
-    <footer><Reveal className="footer-promo" group="footer-promo"><a className="wordmark" href="#" aria-label="FORME home">forme<span>®</span></a><p>Connected data. Less manual work.</p></Reveal>
-      <span>Working identity · Data automation</span><a href="#main">Back to top ↑</a>
+    <footer className="portfolio-footer">
+      <Reveal className="footer-promo" group="footer-promo"><a className="portfolio-wordmark" href="#top" aria-label="FORME home">forme<span>®</span></a><p>Build better. Move securely.</p></Reveal>
+      <span>Automation · Web design · Cybersecurity</span><a href="#top">Back to top ↑</a>
     </footer>
   </>;
 }

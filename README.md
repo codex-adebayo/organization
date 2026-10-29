@@ -1,6 +1,6 @@
 # FORME — Next.js agency app
 
-An editorial digital agency website built with the Next.js App Router and React. FORME is an editable working identity. Portfolio studies are clearly labelled self-initiated concepts.
+A professional portfolio for an independent digital practice spanning automation, web design, and cybersecurity. Built with the Next.js App Router and React. FORME remains an editable working identity; portfolio studies are clearly labelled self-initiated concepts.
 
 ## Architecture
 
@@ -8,10 +8,10 @@ An editorial digital agency website built with the Next.js App Router and React.
 - `app/page.jsx`: server-rendered homepage content and section structure.
 - `components/Header.jsx`: responsive navigation.
 - `app/page.jsx` and `app/globals.css`: static cinematic hero composition.
-- `components/HeroScrollSection.jsx`: server-rendered three-stage workflow reading section.
+- `app/page.jsx`: three detailed practice chapters, operating model, and delivery standards.
 - `components/Projects.jsx`: portfolio concepts and accessible native dialogs.
 - `components/BriefForm.jsx`: validated, browser-only project brief download.
-- `components/Motion.jsx`: scroll reveals with cleanup and reduced-motion support.
+- `components/effects/Reveal.jsx`: restrained scroll reveals with cleanup and reduced-motion support.
 - `public/favicon.svg`: original icon.
 
 The main content renders on the server. Small client components handle state and browser APIs; the old standalone HTML and imperative JavaScript entry points are removed.
@@ -53,7 +53,7 @@ The agency story uses react-kino. Project exits use AnimatePresence from motion/
 
 Run `npm run check:story` to validate/export the portable story and inspect it with Kino doctor. The exported document is uploaded in the cloud review artifact alongside browser screenshots.
 
-## Data automation agency
+## Professional digital portfolio
 
 The working positioning is now a data automation agency: “Less busywork. More flow.” Services, illustrative workflow blueprints, process copy, metadata, and the downloadable automation brief follow that direction.
 

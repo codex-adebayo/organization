@@ -1,6 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { useRef } from 'react';
 import Reveal from './effects/Reveal';
 import Feedback from './effects/Feedback';
 
@@ -36,37 +35,32 @@ const concepts = {
 
 export default function Projects() {
   const dialog = useRef(null);
-  const trigger = useRef(null);
-  const [active, setActive] = useState('signal');
-  const [present, setPresent] = useState(false);
-  const concept = concepts[active];
 
-  function openProject(key, button) {
-    trigger.current = button;
-    flushSync(() => {
-      setActive(key);
-      setPresent(true);
+  function openProject(key) {
+    const panel = dialog.current;
+    if (!panel) return;
+    panel.querySelectorAll('[data-project-panel]').forEach(section => {
+      section.hidden = section.dataset.projectPanel !== key;
     });
-    if (dialog.current && !dialog.current.open) {
-      dialog.current.showModal();
-      dialog.current.scrollTop = 0;
-    }
+    panel.setAttribute('aria-labelledby', 'dialog-title-' + key);
+    if (!panel.open) panel.showModal();
+    panel.scrollTop = 0;
   }
   function closeProject() {
     dialog.current?.close();
-    setPresent(false);
   }
   function backdropClick(event) {
-    if (event.target !== dialog.current) return;
-    const bounds = dialog.current.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeProject();
+    const panel = dialog.current;
+    if (event.target !== panel) return;
+    const bounds = panel.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) panel.close();
   }
 
   return <>
     <Reveal className="portfolio-projects" group="work-projects">
       {Object.entries(concepts).map(([key, project], index) =>
-        <Feedback preserveHover key={key} className={'portfolio-project project-' + key + (index === 0 ? ' project-featured' : '')}
-          type="button" data-project={key} onClick={event => openProject(key, event.currentTarget)} aria-haspopup="dialog">
+        <Feedback scaleOccupied preserveHover key={key} type="button" className={'portfolio-project project-' + key + (index === 0 ? ' project-featured' : '')}
+          data-project={key} onClick={() => openProject(key)} aria-haspopup="dialog" aria-controls="project-dialog">
           <span className="project-visual">
             <span className="project-index">0{index + 1} / 03</span>
             <span className="project-signal" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -77,22 +71,21 @@ export default function Projects() {
         </Feedback>)}
     </Reveal>
 
-    <dialog ref={dialog} id="project-dialog" aria-labelledby="dialog-title" onClick={backdropClick}
-      onCancel={event => { event.preventDefault(); closeProject(); }}
-      onClose={() => { setPresent(false); trigger.current?.focus(); }}>
-      {present && <div data-project-panel={active}>
-        <Feedback type="button" className="dialog-close" aria-label="Close project" onClick={closeProject}>Close ✕</Feedback>
-        <span className="eyebrow">ILLUSTRATIVE CONCEPT / {concept.practice.toUpperCase()}</span>
-        <h2 id="dialog-title">{concept.title}</h2><p id="dialog-intro">{concept.intro}</p>
-        <div className={'portfolio-dialog-visual dialog-' + active} aria-hidden="true">{concept.visual}</div>
-        <div className="case-columns">
-          <section><h3>The question</h3><p>{concept.question}</p></section>
-          <section><h3>The direction</h3><p>{concept.direction}</p></section>
-        </div>
-        <div className="project-proof"><span>Proposed outputs</span><ul>{concept.proof.map(item => <li key={item}>{item}</li>)}</ul></div>
-        <p className="case-note">A self-initiated concept used to demonstrate our approach. No customer deployment or measured result is claimed.</p>
-        <a href="#contact" className="case-contact" onClick={closeProject}>Discuss a project like this ↗</a>
-      </div>}
+    <dialog ref={dialog} id="project-dialog" aria-labelledby="dialog-title-signal" onClick={backdropClick}>
+      {Object.entries(concepts).map(([key, concept], index) =>
+        <div key={key} data-project-panel={key} hidden={index !== 0}>
+          <Feedback type="button" className="dialog-close" aria-label="Close project" onClick={closeProject}>Close ✕</Feedback>
+          <span className="eyebrow">ILLUSTRATIVE CONCEPT / {concept.practice.toUpperCase()}</span>
+          <h2 id={'dialog-title-' + key}>{concept.title}</h2><p>{concept.intro}</p>
+          <div className={'portfolio-dialog-visual dialog-' + key} aria-hidden="true">{concept.visual}</div>
+          <div className="case-columns">
+            <section><h3>The question</h3><p>{concept.question}</p></section>
+            <section><h3>The direction</h3><p>{concept.direction}</p></section>
+          </div>
+          <div className="project-proof"><span>Proposed outputs</span><ul>{concept.proof.map(item => <li key={item}>{item}</li>)}</ul></div>
+          <p className="case-note">A self-initiated concept used to demonstrate our approach. No customer deployment or measured result is claimed.</p>
+          <a href="#contact" className="case-contact" onClick={closeProject}>Discuss a project like this ↗</a>
+        </div>)}
     </dialog>
   </>;
 }

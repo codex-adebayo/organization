@@ -33,7 +33,6 @@ export function useEntrance({
       if (completed.current) return;
       completed.current = true;
       clearTimeout(completionTimer);
-      animation?.cancel();
       rest();
       element.dataset.effectState = 'complete';
       if (reason) element.dataset.effectBypass = reason;
@@ -72,6 +71,7 @@ export function useEntrance({
       observer?.disconnect();
       rest(); // Underlying state is readable if playback is interrupted or unavailable.
       animation = element.animate([config.from, config.to], config.timing);
+      element.dataset.effectState = 'complete';
       completionTimer = window.setTimeout(() => { if (alive) finish(); }, config.timing.delay + config.timing.duration + 100);
       animation.finished.then(() => { if (alive) finish(); }).catch(() => {});
     }

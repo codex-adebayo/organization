@@ -16,7 +16,7 @@ test('complete portfolio journey, concept studies and project brief', async ({ p
     await trigger.scrollIntoViewIfNeeded();
     await trigger.click();
     await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.locator('#dialog-title')).toHaveText(name);
+    await expect(page.getByRole('dialog').getByRole('heading', { level: 2 })).toHaveText(name);
     await page.getByRole('button', { name: 'Close project' }).click();
     await expect(page.getByRole('dialog')).not.toBeVisible();
     await expect(trigger).toBeFocused();

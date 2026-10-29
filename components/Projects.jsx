@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import Reveal from './effects/Reveal';
 import Feedback from './effects/Feedback';
 
@@ -40,17 +41,16 @@ export default function Projects() {
   const [present, setPresent] = useState(false);
   const concept = concepts[active];
 
-  useEffect(() => {
-    if (present && !dialog.current.open) {
+  function openProject(key, button) {
+    trigger.current = button;
+    flushSync(() => {
+      setActive(key);
+      setPresent(true);
+    });
+    if (dialog.current && !dialog.current.open) {
       dialog.current.showModal();
       dialog.current.scrollTop = 0;
     }
-  }, [present]);
-
-  function openProject(key, button) {
-    trigger.current = button;
-    setActive(key);
-    setPresent(true);
   }
   function closeProject() {
     dialog.current?.close();
@@ -66,7 +66,7 @@ export default function Projects() {
     <Reveal className="portfolio-projects" group="work-projects">
       {Object.entries(concepts).map(([key, project], index) =>
         <Feedback preserveHover key={key} className={'portfolio-project project-' + key + (index === 0 ? ' project-featured' : '')}
-          data-project={key} onClick={event => openProject(key, event.currentTarget)} aria-haspopup="dialog">
+          type="button" data-project={key} onClick={event => openProject(key, event.currentTarget)} aria-haspopup="dialog">
           <span className="project-visual">
             <span className="project-index">0{index + 1} / 03</span>
             <span className="project-signal" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -81,7 +81,7 @@ export default function Projects() {
       onCancel={event => { event.preventDefault(); closeProject(); }}
       onClose={() => { setPresent(false); trigger.current?.focus(); }}>
       {present && <div data-project-panel={active}>
-        <Feedback className="dialog-close" aria-label="Close project" onClick={closeProject}>Close ✕</Feedback>
+        <Feedback type="button" className="dialog-close" aria-label="Close project" onClick={closeProject}>Close ✕</Feedback>
         <span className="eyebrow">ILLUSTRATIVE CONCEPT / {concept.practice.toUpperCase()}</span>
         <h2 id="dialog-title">{concept.title}</h2><p id="dialog-intro">{concept.intro}</p>
         <div className={'portfolio-dialog-visual dialog-' + active} aria-hidden="true">{concept.visual}</div>
